@@ -1,7 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "InlineControl.h"
 #include "Vec3.h"
 #include <random>
 #include <cmath>
@@ -10,7 +9,7 @@
  * Generate a random double in the range [0, 1).
  * Uses a static generator for efficiency.
  */
-RAYTRACER_INLINE double random_double() {
+inline double random_double() {
     static std::uniform_real_distribution<double> distribution(0.0, 1.0);
     static std::mt19937 generator;
     return distribution(generator);
@@ -22,7 +21,7 @@ RAYTRACER_INLINE double random_double() {
  * @param min Minimum value (inclusive)
  * @param max Maximum value (exclusive)
  */
-RAYTRACER_INLINE double random_double(double min, double max) {
+inline double random_double(double min, double max) {
     return min + (max - min) * random_double();
 }
 
@@ -30,7 +29,7 @@ RAYTRACER_INLINE double random_double(double min, double max) {
  * Generate a random vector inside a unit sphere.
  * Used for diffuse material scattering.
  */
-RAYTRACER_INLINE Vec3 random_in_unit_sphere() {
+inline Vec3 random_in_unit_sphere() {
     while (true) {
         Vec3 point = Vec3(random_double(-1, 1), random_double(-1, 1), random_double(-1, 1));
         if (point.length_squared() < 1) {
@@ -43,7 +42,7 @@ RAYTRACER_INLINE Vec3 random_in_unit_sphere() {
  * Generate a random unit vector (length = 1).
  * Used for random scattering directions.
  */
-RAYTRACER_INLINE Vec3 random_unit_vector() {
+inline Vec3 random_unit_vector() {
     return unit_vector(random_in_unit_sphere());
 }
 
@@ -51,7 +50,7 @@ RAYTRACER_INLINE Vec3 random_unit_vector() {
  * Check if a vector is very close to zero in all dimensions.
  * Used to catch degenerate cases.
  */
-RAYTRACER_INLINE bool is_near_zero(const Vec3& vector) {
+inline bool is_near_zero(const Vec3& vector) {
     const double epsilon = 1e-8;
     return (std::fabs(vector.x()) < epsilon) && 
            (std::fabs(vector.y()) < epsilon) && 
@@ -66,7 +65,7 @@ RAYTRACER_INLINE bool is_near_zero(const Vec3& vector) {
  * @param normal The surface normal (should be unit length)
  * @return The reflected vector
  */
-RAYTRACER_INLINE Vec3 reflect(const Vec3& incoming, const Vec3& normal) {
+inline Vec3 reflect(const Vec3& incoming, const Vec3& normal) {
     return incoming - 2 * dot(incoming, normal) * normal;
 }
 
@@ -79,7 +78,7 @@ RAYTRACER_INLINE Vec3 reflect(const Vec3& incoming, const Vec3& normal) {
  * @param refraction_ratio Ratio of refractive indices (n1/n2)
  * @return The refracted vector
  */
-RAYTRACER_INLINE Vec3 refract(const Vec3& incoming, const Vec3& normal, double refraction_ratio) {
+inline Vec3 refract(const Vec3& incoming, const Vec3& normal, double refraction_ratio) {
     double cos_theta = std::fmin(dot(-incoming, normal), 1.0);
     Vec3 refracted_perpendicular = refraction_ratio * (incoming + cos_theta * normal);
     Vec3 refracted_parallel = -std::sqrt(std::fabs(1.0 - refracted_perpendicular.length_squared())) * normal;

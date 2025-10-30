@@ -1,0 +1,3 @@
+/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles/raytracer.dir
+/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles/edit_cache.dir
+/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles/rebuild_cache.dir

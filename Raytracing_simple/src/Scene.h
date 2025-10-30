@@ -1,7 +1,6 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "InlineControl.h"
 #include "AxisAlignedRect.h"
 #include "Box.h"
 #include "HittableList.h"
@@ -23,7 +22,7 @@ struct RoomLayout {
     double front_opening_z;
 };
 
-RAYTRACER_INLINE RoomLayout default_room_layout() {
+inline RoomLayout default_room_layout() {
     return RoomLayout{
         5.0,   // half_width
         6.0,   // half_depth
@@ -43,7 +42,7 @@ struct Scene {
     std::size_t light_count() const { return lights.size(); }
 };
 
-RAYTRACER_INLINE Scene create_scene(const RoomLayout& layout = default_room_layout(),
+inline Scene create_scene(const RoomLayout& layout = default_room_layout(),
                           std::vector<Light> lights = {}) {
     Scene scene;
     scene.layout = layout;

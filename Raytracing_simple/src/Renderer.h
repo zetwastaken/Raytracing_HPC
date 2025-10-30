@@ -1,7 +1,6 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "InlineControl.h"
 #include "Camera.h"
 #include "Color.h"
 #include "Hittable.h"
@@ -19,7 +18,7 @@
 /**
  * Calculate the sky gradient color based on ray direction.
  */
-RAYTRACER_INLINE Color calculate_sky_color(const Ray& ray) {
+inline Color calculate_sky_color(const Ray& ray) {
     Vec3 unit_direction = unit_vector(ray.direction());
     
     // Map y-coordinate from [-1, 1] to [0, 1] for blending
@@ -32,7 +31,7 @@ RAYTRACER_INLINE Color calculate_sky_color(const Ray& ray) {
     return (1.0 - blend_factor) * white + blend_factor * sky_blue;
 }
 
-RAYTRACER_INLINE Color compute_diffuse_lighting(const Scene& scene, const HitRecord& hit_info) {
+inline Color compute_diffuse_lighting(const Scene& scene, const HitRecord& hit_info) {
     if (scene.lights.empty()) {
         return Color(0.0, 0.0, 0.0);
     }
@@ -77,7 +76,7 @@ RAYTRACER_INLINE Color compute_diffuse_lighting(const Scene& scene, const HitRec
  * @param depth Current recursion depth (prevents infinite bounces)
  * @return The color for this ray
  */
-RAYTRACER_INLINE Color calculate_ray_color(const Ray& ray, const Scene& scene, int depth) {
+inline Color calculate_ray_color(const Ray& ray, const Scene& scene, int depth) {
     // If we've exceeded the ray bounce limit, no more light is gathered
     if (depth <= 0) {
         return Color(0, 0, 0);
@@ -117,7 +116,7 @@ RAYTRACER_INLINE Color calculate_ray_color(const Ray& ray, const Scene& scene, i
  * Render a single pixel by casting multiple rays through it (antialiasing).
  * Takes multiple samples per pixel and averages them for smoother edges.
  */
-RAYTRACER_INLINE Color render_pixel(int col, int row, const RenderConfig& config,
+inline Color render_pixel(int col, int row, const RenderConfig& config,
                           const Camera& camera, const Scene& scene, int max_depth) {
     
     Color accumulated_color(0, 0, 0);
@@ -147,7 +146,7 @@ RAYTRACER_INLINE Color render_pixel(int col, int row, const RenderConfig& config
 /**
  * Render the entire image with antialiasing and recursive ray tracing.
  */
-RAYTRACER_INLINE std::vector<unsigned char> render_image(const RenderConfig& config,
+inline std::vector<unsigned char> render_image(const RenderConfig& config,
                                                const Camera& camera,
                                                const Scene& scene,
                                                int max_depth) {

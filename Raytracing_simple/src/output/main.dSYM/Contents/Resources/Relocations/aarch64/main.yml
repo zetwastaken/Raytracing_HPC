@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/output/main'
+relocations:     []
+...

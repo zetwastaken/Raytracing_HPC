@@ -1,8 +1,16 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+#include "InlineControl.h"
+
 #include <cmath>
 #include <iostream>
+
+enum class Axis {
+    X = 0,
+    Y = 1,
+    Z = 2
+};
 
 /**
  * A 3D vector class for representing positions, directions, and colors.
@@ -32,6 +40,18 @@ public:
     double x() const { return x_component; }
     double y() const { return y_component; }
     double z() const { return z_component; }
+
+    // Fetch a component by axis enum (avoids magic indices when selecting coordinates).
+    double component(Axis axis) const {
+        switch (axis) {
+        case Axis::X:
+            return x_component;
+        case Axis::Y:
+            return y_component;
+        default:
+            return z_component;
+        }
+    }
 
     // ========== Make Vector Negative ==========
     
@@ -113,7 +133,7 @@ using Color = Vec3;    // Represents RGB color (red=x, green=y, blue=z)
  * Print a vector to the console.
  * Example output: "1.5 2.0 3.5"
  */
-inline std::ostream& operator<<(std::ostream& output_stream, const Vec3& vector) {
+RAYTRACER_INLINE std::ostream& operator<<(std::ostream& output_stream, const Vec3& vector) {
     output_stream << vector.x_component << ' ' 
                   << vector.y_component << ' ' 
                   << vector.z_component;
@@ -127,7 +147,7 @@ inline std::ostream& operator<<(std::ostream& output_stream, const Vec3& vector)
  * Add two vectors together.
  * Example: (1, 2, 3) + (4, 5, 6) = (5, 7, 9)
  */
-inline Vec3 operator+(const Vec3& first, const Vec3& second) {
+RAYTRACER_INLINE Vec3 operator+(const Vec3& first, const Vec3& second) {
     return Vec3(
         first.x_component + second.x_component,
         first.y_component + second.y_component,
@@ -139,7 +159,7 @@ inline Vec3 operator+(const Vec3& first, const Vec3& second) {
  * Subtract one vector from another.
  * Example: (5, 7, 9) - (1, 2, 3) = (4, 5, 6)
  */
-inline Vec3 operator-(const Vec3& first, const Vec3& second) {
+RAYTRACER_INLINE Vec3 operator-(const Vec3& first, const Vec3& second) {
     return Vec3(
         first.x_component - second.x_component,
         first.y_component - second.y_component,
@@ -152,7 +172,7 @@ inline Vec3 operator-(const Vec3& first, const Vec3& second) {
  * Useful for blending colors together.
  * Example: (2, 3, 4) * (1, 2, 3) = (2, 6, 12)
  */
-inline Vec3 operator*(const Vec3& first, const Vec3& second) {
+RAYTRACER_INLINE Vec3 operator*(const Vec3& first, const Vec3& second) {
     return Vec3(
         first.x_component * second.x_component,
         first.y_component * second.y_component,
@@ -167,7 +187,7 @@ inline Vec3 operator*(const Vec3& first, const Vec3& second) {
  * Multiply a vector by a number (makes it longer/shorter).
  * Example: 3 * (1, 2, 3) = (3, 6, 9)
  */
-inline Vec3 operator*(double scale_factor, const Vec3& vector) {
+RAYTRACER_INLINE Vec3 operator*(double scale_factor, const Vec3& vector) {
     return Vec3(
         scale_factor * vector.x_component,
         scale_factor * vector.y_component,
@@ -179,7 +199,7 @@ inline Vec3 operator*(double scale_factor, const Vec3& vector) {
  * Multiply a vector by a number (same as above, just reversed order).
  * Example: (1, 2, 3) * 3 = (3, 6, 9)
  */
-inline Vec3 operator*(const Vec3& vector, double scale_factor) {
+RAYTRACER_INLINE Vec3 operator*(const Vec3& vector, double scale_factor) {
     return scale_factor * vector;
 }
 
@@ -187,7 +207,7 @@ inline Vec3 operator*(const Vec3& vector, double scale_factor) {
  * Divide a vector by a number (makes it shorter).
  * Example: (6, 9, 12) / 3 = (2, 3, 4)
  */
-inline Vec3 operator/(const Vec3& vector, double divisor) {
+RAYTRACER_INLINE Vec3 operator/(const Vec3& vector, double divisor) {
     double scale_factor = 1.0 / divisor;
     return scale_factor * vector;
 }
@@ -205,7 +225,7 @@ inline Vec3 operator/(const Vec3& vector, double divisor) {
  * Example: dot((1, 0, 0), (1, 0, 0)) = 1
  *          dot((1, 0, 0), (0, 1, 0)) = 0
  */
-inline double dot(const Vec3& first, const Vec3& second) {
+RAYTRACER_INLINE double dot(const Vec3& first, const Vec3& second) {
     return first.x_component * second.x_component
          + first.y_component * second.y_component
          + first.z_component * second.z_component;
@@ -216,7 +236,7 @@ inline double dot(const Vec3& first, const Vec3& second) {
  * The result points "out of the plane" formed by the two input vectors.
  * Used to find normals (perpendicular directions) in 3D graphics.
  */
-inline Vec3 cross(const Vec3& first, const Vec3& second) {
+RAYTRACER_INLINE Vec3 cross(const Vec3& first, const Vec3& second) {
     return Vec3(
         first.y_component * second.z_component - first.z_component * second.y_component,
         first.z_component * second.x_component - first.x_component * second.z_component,
@@ -230,7 +250,7 @@ inline Vec3 cross(const Vec3& first, const Vec3& second) {
  * 
  * Example: unit_vector((3, 4, 0)) = (0.6, 0.8, 0) with length = 1
  */
-inline Vec3 unit_vector(const Vec3& vector) {
+RAYTRACER_INLINE Vec3 unit_vector(const Vec3& vector) {
     return vector / vector.length();
 }
 

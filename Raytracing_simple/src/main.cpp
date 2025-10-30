@@ -5,7 +5,6 @@
 #include "Scene.h"
 
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <utility>
 #include <vector>
@@ -33,33 +32,26 @@ bool save_image(const std::string& filepath, const RenderConfig& config,
 
 int main() {
     // ========== Configuration ==========
-    RenderConfig config(16.0 / 9.0, 600, 500);  // aspect_ratio, width, samples_per_pixel
+    RenderConfig config(16.0 / 9.0, 300, 100);  // aspect_ratio, width, samples_per_pixel
     const int max_depth = 50;  // Maximum number of ray bounces for reflections/refractions
-    const int light_count = 3;
-    const double light_intensity = 14.0;
-    const double light_radius = 6.0;
-    const double light_height = 6.0;
-    constexpr double pi = 3.1415926535897932385;
+    const RoomLayout room_layout = default_room_layout();
+    const double ceiling_height = room_layout.ceiling_y;
+    const double room_center_z = room_layout.back_wall_z + room_layout.half_depth;
+    const double lamp_intensity = 10.0;
+    const double lamp_drop_from_ceiling = 0.3;
+    const double lamp_height = ceiling_height - lamp_drop_from_ceiling;
+    const double lamp_z_position = room_center_z;
     
     // ========== Setup ==========
     Camera camera(config.aspect_ratio);
     
     std::vector<Light> lights;
-    lights.reserve(light_count);
-    
-    // Place lights evenly on a ring so they illuminate the scene from multiple directions
-    for (int index = 0; index < light_count; ++index) {
-        double angle = 2.0 * pi * (static_cast<double>(index) / light_count);
-        Point3 position(
-            light_radius * std::cos(angle),
-            light_height,
-            -2.5 + 1.5 * std::sin(angle)
-        );
-        
-        lights.emplace_back(position, Color(light_intensity, light_intensity, light_intensity));
-    }
+    lights.emplace_back(
+        Point3(0.0, lamp_height, lamp_z_position),
+        Color(lamp_intensity, lamp_intensity, lamp_intensity)
+    );
 
-    Scene scene = create_scene(std::move(lights));
+    Scene scene = create_scene(room_layout, std::move(lights));
     
     // ========== Render ==========
     std::vector<unsigned char> image_data = render_image(config, camera, scene, max_depth);

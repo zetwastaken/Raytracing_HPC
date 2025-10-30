@@ -1,3 +1,4 @@
+#include "InlineControl.h"
 #include "Vec3.h"
 
 #include <algorithm>
@@ -19,7 +20,7 @@
  * @param color_value A color component (red, green, or blue) in range [0.0, 1.0]
  * @return Byte value in range [0, 255] suitable for image storage
  */
-inline unsigned char convert_to_byte(double color_value) {
+RAYTRACER_INLINE unsigned char convert_to_byte(double color_value) {
     // Make sure the value is between 0.0 and 0.999
     // (We use 0.999 instead of 1.0 to ensure we get 255, not 256)
     const double clamped_value = std::clamp(color_value, 0.0, 0.999);
@@ -39,7 +40,7 @@ inline unsigned char convert_to_byte(double color_value) {
  * @param image_buffer The buffer where we're storing all pixel data
  * @param pixel_color The color to add (x=red, y=green, z=blue)
  */
-inline void write_color(std::vector<unsigned char>& image_buffer, Color pixel_color) {
+RAYTRACER_INLINE void write_color(std::vector<unsigned char>& image_buffer, Color pixel_color) {
     // Add red component
     image_buffer.push_back(convert_to_byte(pixel_color.x()));
     

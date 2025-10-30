@@ -1,6 +1,8 @@
 #ifndef PNG_WRITER_H
 #define PNG_WRITER_H
 
+#include "InlineControl.h"
+
 #include <array>
 #include <cstdint>
 #include <fstream>
@@ -10,7 +12,7 @@
 namespace png_writer {
 namespace detail {
 
-inline void write_uint32(std::ofstream &out, std::uint32_t value) {
+RAYTRACER_INLINE void write_uint32(std::ofstream &out, std::uint32_t value) {
     unsigned char buffer[4] = {
         static_cast<unsigned char>((value >> 24) & 0xFF),
         static_cast<unsigned char>((value >> 16) & 0xFF),
@@ -20,7 +22,7 @@ inline void write_uint32(std::ofstream &out, std::uint32_t value) {
     out.write(reinterpret_cast<const char *>(buffer), sizeof(buffer));
 }
 
-inline std::uint32_t crc32(const unsigned char *data, std::size_t length) {
+RAYTRACER_INLINE std::uint32_t crc32(const unsigned char *data, std::size_t length) {
     std::uint32_t crc = 0xFFFFFFFFu;
     for (std::size_t i = 0; i < length; ++i) {
         crc ^= data[i];
@@ -32,7 +34,7 @@ inline std::uint32_t crc32(const unsigned char *data, std::size_t length) {
     return ~crc;
 }
 
-inline std::uint32_t adler32(const unsigned char *data, std::size_t len) {
+RAYTRACER_INLINE std::uint32_t adler32(const unsigned char *data, std::size_t len) {
     const std::uint32_t MOD_ADLER = 65521u;
     std::uint32_t a = 1;
     std::uint32_t b = 0;
@@ -50,7 +52,7 @@ inline std::uint32_t adler32(const unsigned char *data, std::size_t len) {
     return (b << 16) | a;
 }
 
-inline void write_chunk(std::ofstream &out, const char type[4], const std::vector<unsigned char> &data) {
+RAYTRACER_INLINE void write_chunk(std::ofstream &out, const char type[4], const std::vector<unsigned char> &data) {
     std::array<unsigned char, 4> chunk_type = {
         static_cast<unsigned char>(type[0]),
         static_cast<unsigned char>(type[1]),
@@ -73,7 +75,7 @@ inline void write_chunk(std::ofstream &out, const char type[4], const std::vecto
     write_uint32(out, crc);
 }
 
-inline void append_uncompressed_block(std::vector<unsigned char> &zlib_data, const unsigned char *block_data, std::size_t block_size, bool is_final_block) {
+RAYTRACER_INLINE void append_uncompressed_block(std::vector<unsigned char> &zlib_data, const unsigned char *block_data, std::size_t block_size, bool is_final_block) {
     const unsigned char bfinal = is_final_block ? 1u : 0u;
     zlib_data.push_back(bfinal);
 
@@ -88,7 +90,7 @@ inline void append_uncompressed_block(std::vector<unsigned char> &zlib_data, con
     zlib_data.insert(zlib_data.end(), block_data, block_data + block_size);
 }
 
-inline std::vector<unsigned char> make_zlib_stream(const std::vector<unsigned char> &raw) {
+RAYTRACER_INLINE std::vector<unsigned char> make_zlib_stream(const std::vector<unsigned char> &raw) {
     std::vector<unsigned char> zlib_data;
     zlib_data.reserve(raw.size() + 6 + (raw.size() / 65535 + 1) * 5);
 
@@ -117,7 +119,7 @@ inline std::vector<unsigned char> make_zlib_stream(const std::vector<unsigned ch
 
 } // namespace detail
 
-inline bool write_rgb(const std::string &filename, int width, int height, const std::vector<unsigned char> &rgb) {
+RAYTRACER_INLINE bool write_rgb(const std::string &filename, int width, int height, const std::vector<unsigned char> &rgb) {
     if (width <= 0 || height <= 0 || static_cast<std::size_t>(width * height * 3) != rgb.size()) {
         return false;
     }

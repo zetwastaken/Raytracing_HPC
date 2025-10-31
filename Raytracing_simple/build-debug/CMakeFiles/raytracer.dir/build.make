@@ -97,19 +97,115 @@ CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -fno-inline -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/AxisAlignedRect.cpp" -o CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.s
 
+CMakeFiles/raytracer.dir/src/Color.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/Color.cpp.o: /Users/zet/Studia/Studia_Mgr/HPC/Copy\ Of\ Raytracing/Raytracing_simple/src/Color.cpp
+CMakeFiles/raytracer.dir/src/Color.cpp.o: CMakeFiles/raytracer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/raytracer.dir/src/Color.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/raytracer.dir/src/Color.cpp.o -MF CMakeFiles/raytracer.dir/src/Color.cpp.o.d -o CMakeFiles/raytracer.dir/src/Color.cpp.o -c "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Color.cpp"
+
+CMakeFiles/raytracer.dir/src/Color.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/Color.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Color.cpp" > CMakeFiles/raytracer.dir/src/Color.cpp.i
+
+CMakeFiles/raytracer.dir/src/Color.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/Color.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Color.cpp" -o CMakeFiles/raytracer.dir/src/Color.cpp.s
+
+CMakeFiles/raytracer.dir/src/PngWriter.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/PngWriter.cpp.o: /Users/zet/Studia/Studia_Mgr/HPC/Copy\ Of\ Raytracing/Raytracing_simple/src/PngWriter.cpp
+CMakeFiles/raytracer.dir/src/PngWriter.cpp.o: CMakeFiles/raytracer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/raytracer.dir/src/PngWriter.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/raytracer.dir/src/PngWriter.cpp.o -MF CMakeFiles/raytracer.dir/src/PngWriter.cpp.o.d -o CMakeFiles/raytracer.dir/src/PngWriter.cpp.o -c "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/PngWriter.cpp"
+
+CMakeFiles/raytracer.dir/src/PngWriter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/PngWriter.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/PngWriter.cpp" > CMakeFiles/raytracer.dir/src/PngWriter.cpp.i
+
+CMakeFiles/raytracer.dir/src/PngWriter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/PngWriter.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/PngWriter.cpp" -o CMakeFiles/raytracer.dir/src/PngWriter.cpp.s
+
+CMakeFiles/raytracer.dir/src/Renderer.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/Renderer.cpp.o: /Users/zet/Studia/Studia_Mgr/HPC/Copy\ Of\ Raytracing/Raytracing_simple/src/Renderer.cpp
+CMakeFiles/raytracer.dir/src/Renderer.cpp.o: CMakeFiles/raytracer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/raytracer.dir/src/Renderer.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/raytracer.dir/src/Renderer.cpp.o -MF CMakeFiles/raytracer.dir/src/Renderer.cpp.o.d -o CMakeFiles/raytracer.dir/src/Renderer.cpp.o -c "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Renderer.cpp"
+
+CMakeFiles/raytracer.dir/src/Renderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/Renderer.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Renderer.cpp" > CMakeFiles/raytracer.dir/src/Renderer.cpp.i
+
+CMakeFiles/raytracer.dir/src/Renderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/Renderer.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Renderer.cpp" -o CMakeFiles/raytracer.dir/src/Renderer.cpp.s
+
+CMakeFiles/raytracer.dir/src/Scene.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/Scene.cpp.o: /Users/zet/Studia/Studia_Mgr/HPC/Copy\ Of\ Raytracing/Raytracing_simple/src/Scene.cpp
+CMakeFiles/raytracer.dir/src/Scene.cpp.o: CMakeFiles/raytracer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/raytracer.dir/src/Scene.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/raytracer.dir/src/Scene.cpp.o -MF CMakeFiles/raytracer.dir/src/Scene.cpp.o.d -o CMakeFiles/raytracer.dir/src/Scene.cpp.o -c "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Scene.cpp"
+
+CMakeFiles/raytracer.dir/src/Scene.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/Scene.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Scene.cpp" > CMakeFiles/raytracer.dir/src/Scene.cpp.i
+
+CMakeFiles/raytracer.dir/src/Scene.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/Scene.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Scene.cpp" -o CMakeFiles/raytracer.dir/src/Scene.cpp.s
+
+CMakeFiles/raytracer.dir/src/Utils.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/Utils.cpp.o: /Users/zet/Studia/Studia_Mgr/HPC/Copy\ Of\ Raytracing/Raytracing_simple/src/Utils.cpp
+CMakeFiles/raytracer.dir/src/Utils.cpp.o: CMakeFiles/raytracer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/raytracer.dir/src/Utils.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/raytracer.dir/src/Utils.cpp.o -MF CMakeFiles/raytracer.dir/src/Utils.cpp.o.d -o CMakeFiles/raytracer.dir/src/Utils.cpp.o -c "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Utils.cpp"
+
+CMakeFiles/raytracer.dir/src/Utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/Utils.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Utils.cpp" > CMakeFiles/raytracer.dir/src/Utils.cpp.i
+
+CMakeFiles/raytracer.dir/src/Utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/Utils.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Utils.cpp" -o CMakeFiles/raytracer.dir/src/Utils.cpp.s
+
+CMakeFiles/raytracer.dir/src/Vec3.cpp.o: CMakeFiles/raytracer.dir/flags.make
+CMakeFiles/raytracer.dir/src/Vec3.cpp.o: /Users/zet/Studia/Studia_Mgr/HPC/Copy\ Of\ Raytracing/Raytracing_simple/src/Vec3.cpp
+CMakeFiles/raytracer.dir/src/Vec3.cpp.o: CMakeFiles/raytracer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/raytracer.dir/src/Vec3.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/raytracer.dir/src/Vec3.cpp.o -MF CMakeFiles/raytracer.dir/src/Vec3.cpp.o.d -o CMakeFiles/raytracer.dir/src/Vec3.cpp.o -c "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Vec3.cpp"
+
+CMakeFiles/raytracer.dir/src/Vec3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/raytracer.dir/src/Vec3.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Vec3.cpp" > CMakeFiles/raytracer.dir/src/Vec3.cpp.i
+
+CMakeFiles/raytracer.dir/src/Vec3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/raytracer.dir/src/Vec3.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/src/Vec3.cpp" -o CMakeFiles/raytracer.dir/src/Vec3.cpp.s
+
 # Object files for target raytracer
 raytracer_OBJECTS = \
 "CMakeFiles/raytracer.dir/src/main.cpp.o" \
-"CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.o"
+"CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.o" \
+"CMakeFiles/raytracer.dir/src/Color.cpp.o" \
+"CMakeFiles/raytracer.dir/src/PngWriter.cpp.o" \
+"CMakeFiles/raytracer.dir/src/Renderer.cpp.o" \
+"CMakeFiles/raytracer.dir/src/Scene.cpp.o" \
+"CMakeFiles/raytracer.dir/src/Utils.cpp.o" \
+"CMakeFiles/raytracer.dir/src/Vec3.cpp.o"
 
 # External object files for target raytracer
 raytracer_EXTERNAL_OBJECTS =
 
 raytracer: CMakeFiles/raytracer.dir/src/main.cpp.o
 raytracer: CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.o
+raytracer: CMakeFiles/raytracer.dir/src/Color.cpp.o
+raytracer: CMakeFiles/raytracer.dir/src/PngWriter.cpp.o
+raytracer: CMakeFiles/raytracer.dir/src/Renderer.cpp.o
+raytracer: CMakeFiles/raytracer.dir/src/Scene.cpp.o
+raytracer: CMakeFiles/raytracer.dir/src/Utils.cpp.o
+raytracer: CMakeFiles/raytracer.dir/src/Vec3.cpp.o
 raytracer: CMakeFiles/raytracer.dir/build.make
 raytracer: CMakeFiles/raytracer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable raytracer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/zet/Studia/Studia_Mgr/HPC/Copy Of Raytracing/Raytracing_simple/build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable raytracer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/raytracer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

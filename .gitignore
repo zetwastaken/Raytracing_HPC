@@ -1,25 +1,49 @@
-CMakelists.txt
-build/
+# CMake build directories
+/build/
+/Raytracing_simple/build*/
+cmake-build-*/
+Raytracing_simple/cmake-build-*/
+
+# CMake generated files
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+compile_commands.json
+CTestTestfile.cmake
+
+# Compiled binaries and libraries
 *.o
 *.obj
 *.exe
 *.dll
 *.so
 *.dylib
+
+# Logs and temporary files
 *.log
 *.tmp
 *.bak
 *.swp
-.DS_Store
-.vscode/
-.idea/
-*.iml   
-node_modules/
-dist/
+
+# Generated scene outputs
+Raytracing_simple/render.png
+Raytracing_simple/traces\ after\ removing\ inline.trace/
+
+# Environment configuration
 .env
 .env.local
 .env.*.local
-coverage/
+
+# OS and editor settings
+.DS_Store
+.vscode/
+.idea/
+*.iml
+
+# Language specific caches
 *.pyc
 __pycache__/
-.ipynb_checkpoints/ 
+.ipynb_checkpoints/
+node_modules/
+coverage/
+dist/

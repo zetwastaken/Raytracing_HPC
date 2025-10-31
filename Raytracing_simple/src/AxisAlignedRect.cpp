@@ -21,6 +21,17 @@ AxisAlignedRect::AxisAlignedRect(const RectOrientation& orientation_in,
     , flip_normal(flip)
 {}
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#endif
+const RectOrientation XYRect::kOrientation{Axis::X, Axis::Y, Axis::Z, Vec3(0, 0, 1)};
+const RectOrientation XZRect::kOrientation{Axis::X, Axis::Z, Axis::Y, Vec3(0, 1, 0)};
+const RectOrientation YZRect::kOrientation{Axis::Y, Axis::Z, Axis::X, Vec3(1, 0, 0)};
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+
 #if defined(__clang__)
 [[clang::noinline]]
 #endif
@@ -53,4 +64,3 @@ bool AxisAlignedRect::hit(const Ray& ray, double min_distance, double max_distan
     record.set_face_normal(ray, outward_normal);
     return true;
 }
-

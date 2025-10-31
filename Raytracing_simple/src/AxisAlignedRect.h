@@ -68,7 +68,7 @@ public:
     {}
 
 private:
-    static inline const RectOrientation kOrientation{Axis::X, Axis::Y, Axis::Z, Vec3(0, 0, 1)};
+    static const RectOrientation kOrientation;
 };
 
 /**
@@ -87,7 +87,7 @@ public:
     {}
 
 private:
-    static inline const RectOrientation kOrientation{Axis::X, Axis::Z, Axis::Y, Vec3(0, 1, 0)};
+    static const RectOrientation kOrientation;
 };
 
 /**
@@ -106,7 +106,7 @@ public:
     {}
 
 private:
-    static inline const RectOrientation kOrientation{Axis::Y, Axis::Z, Axis::X, Vec3(1, 0, 0)};
+    static const RectOrientation kOrientation;
 };
 
 #endif

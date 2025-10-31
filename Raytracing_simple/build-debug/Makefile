@@ -153,6 +153,150 @@ src/AxisAlignedRect.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/AxisAlignedRect.cpp.s
 .PHONY : src/AxisAlignedRect.cpp.s
 
+src/Color.o: src/Color.cpp.o
+.PHONY : src/Color.o
+
+# target to build an object file
+src/Color.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Color.cpp.o
+.PHONY : src/Color.cpp.o
+
+src/Color.i: src/Color.cpp.i
+.PHONY : src/Color.i
+
+# target to preprocess a source file
+src/Color.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Color.cpp.i
+.PHONY : src/Color.cpp.i
+
+src/Color.s: src/Color.cpp.s
+.PHONY : src/Color.s
+
+# target to generate assembly for a file
+src/Color.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Color.cpp.s
+.PHONY : src/Color.cpp.s
+
+src/PngWriter.o: src/PngWriter.cpp.o
+.PHONY : src/PngWriter.o
+
+# target to build an object file
+src/PngWriter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/PngWriter.cpp.o
+.PHONY : src/PngWriter.cpp.o
+
+src/PngWriter.i: src/PngWriter.cpp.i
+.PHONY : src/PngWriter.i
+
+# target to preprocess a source file
+src/PngWriter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/PngWriter.cpp.i
+.PHONY : src/PngWriter.cpp.i
+
+src/PngWriter.s: src/PngWriter.cpp.s
+.PHONY : src/PngWriter.s
+
+# target to generate assembly for a file
+src/PngWriter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/PngWriter.cpp.s
+.PHONY : src/PngWriter.cpp.s
+
+src/Renderer.o: src/Renderer.cpp.o
+.PHONY : src/Renderer.o
+
+# target to build an object file
+src/Renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Renderer.cpp.o
+.PHONY : src/Renderer.cpp.o
+
+src/Renderer.i: src/Renderer.cpp.i
+.PHONY : src/Renderer.i
+
+# target to preprocess a source file
+src/Renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Renderer.cpp.i
+.PHONY : src/Renderer.cpp.i
+
+src/Renderer.s: src/Renderer.cpp.s
+.PHONY : src/Renderer.s
+
+# target to generate assembly for a file
+src/Renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Renderer.cpp.s
+.PHONY : src/Renderer.cpp.s
+
+src/Scene.o: src/Scene.cpp.o
+.PHONY : src/Scene.o
+
+# target to build an object file
+src/Scene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Scene.cpp.o
+.PHONY : src/Scene.cpp.o
+
+src/Scene.i: src/Scene.cpp.i
+.PHONY : src/Scene.i
+
+# target to preprocess a source file
+src/Scene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Scene.cpp.i
+.PHONY : src/Scene.cpp.i
+
+src/Scene.s: src/Scene.cpp.s
+.PHONY : src/Scene.s
+
+# target to generate assembly for a file
+src/Scene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Scene.cpp.s
+.PHONY : src/Scene.cpp.s
+
+src/Utils.o: src/Utils.cpp.o
+.PHONY : src/Utils.o
+
+# target to build an object file
+src/Utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Utils.cpp.o
+.PHONY : src/Utils.cpp.o
+
+src/Utils.i: src/Utils.cpp.i
+.PHONY : src/Utils.i
+
+# target to preprocess a source file
+src/Utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Utils.cpp.i
+.PHONY : src/Utils.cpp.i
+
+src/Utils.s: src/Utils.cpp.s
+.PHONY : src/Utils.s
+
+# target to generate assembly for a file
+src/Utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Utils.cpp.s
+.PHONY : src/Utils.cpp.s
+
+src/Vec3.o: src/Vec3.cpp.o
+.PHONY : src/Vec3.o
+
+# target to build an object file
+src/Vec3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Vec3.cpp.o
+.PHONY : src/Vec3.cpp.o
+
+src/Vec3.i: src/Vec3.cpp.i
+.PHONY : src/Vec3.i
+
+# target to preprocess a source file
+src/Vec3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Vec3.cpp.i
+.PHONY : src/Vec3.cpp.i
+
+src/Vec3.s: src/Vec3.cpp.s
+.PHONY : src/Vec3.s
+
+# target to generate assembly for a file
+src/Vec3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raytracer.dir/build.make CMakeFiles/raytracer.dir/src/Vec3.cpp.s
+.PHONY : src/Vec3.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +333,24 @@ help:
 	@echo "... src/AxisAlignedRect.o"
 	@echo "... src/AxisAlignedRect.i"
 	@echo "... src/AxisAlignedRect.s"
+	@echo "... src/Color.o"
+	@echo "... src/Color.i"
+	@echo "... src/Color.s"
+	@echo "... src/PngWriter.o"
+	@echo "... src/PngWriter.i"
+	@echo "... src/PngWriter.s"
+	@echo "... src/Renderer.o"
+	@echo "... src/Renderer.i"
+	@echo "... src/Renderer.s"
+	@echo "... src/Scene.o"
+	@echo "... src/Scene.i"
+	@echo "... src/Scene.s"
+	@echo "... src/Utils.o"
+	@echo "... src/Utils.i"
+	@echo "... src/Utils.s"
+	@echo "... src/Vec3.o"
+	@echo "... src/Vec3.i"
+	@echo "... src/Vec3.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

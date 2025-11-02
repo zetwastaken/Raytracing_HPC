@@ -1,6 +1,11 @@
 #ifndef PNG_WRITER_H
 #define PNG_WRITER_H
 
+/**
+ * @file PngWriter.h
+ * @brief Interface for writing RGB buffers to PNG files.
+ */
+
 #include <string>
 #include <vector>
 

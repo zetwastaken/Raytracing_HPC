@@ -1,0 +1,38 @@
+# Doxyfile 1.9.8
+
+PROJECT_NAME           = "Raytracing"
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = NO
+ALLOW_UNICODE_NAMES    = NO
+
+INPUT                  = src docs
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h \
+                         *.cpp \
+                         *.md
+EXCLUDE_PATTERNS       = */build-* \
+                         */output/*
+USE_MDFILE_AS_MAINPAGE = docs/overview.md
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_TIMESTAMP         = NO
+GENERATE_LATEX         = NO
+
+MARKDOWN_SUPPORT       = YES
+INLINE_INHERITED_MEMB  = YES
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+
+WARN_IF_UNDOCUMENTED   = YES
+WARN_AS_ERROR          = NO
+WARN_LOGFILE           = docs/doxygen-warnings.log
+
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = YES
+
+QUIET                  = NO

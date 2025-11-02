@@ -1,6 +1,11 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+/**
+ * @file Sphere.h
+ * @brief Sphere primitive with ray intersection helper.
+ */
+
 #include "Hittable.h"
 #include "Material.h"
 #include "Vec3.h"

@@ -1,6 +1,11 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
+/**
+ * @file Light.h
+ * @brief Simple analytic light sources used by the renderer.
+ */
+
 #include "Vec3.h"
 
 /**

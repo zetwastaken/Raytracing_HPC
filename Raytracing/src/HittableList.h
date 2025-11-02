@@ -1,6 +1,11 @@
 #ifndef HITTABLE_LIST_H
 #define HITTABLE_LIST_H
 
+/**
+ * @file HittableList.h
+ * @brief Container for ray-intersectable scene geometry.
+ */
+
 #include "Hittable.h"
 
 #include <memory>

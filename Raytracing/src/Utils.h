@@ -1,6 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+/**
+ * @file Utils.h
+ * @brief Random sampling and helper math routines.
+ */
+
 #include "Vec3.h"
 #include <random>
 #include <cmath>

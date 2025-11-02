@@ -1,6 +1,11 @@
 #ifndef RAY_H
 #define RAY_H
 
+/**
+ * @file Ray.h
+ * @brief Parametric ray representation used for tracing.
+ */
+
 #include "Vec3.h"
 
 /**

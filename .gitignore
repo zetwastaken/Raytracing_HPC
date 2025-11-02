@@ -28,6 +28,8 @@ CTestTestfile.cmake
 # Project generated assets
 Raytracing/render*.png
 Raytracing/traces after removing inline.trace/
+Raytracing/docs/html/
+Raytracing/docs/doxygen-warnings.log
 
 # IDE metadata
 .idea/

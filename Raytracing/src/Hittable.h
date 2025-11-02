@@ -1,6 +1,11 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
+/**
+ * @file Hittable.h
+ * @brief Intersection data structures and interfaces for scene geometry.
+ */
+
 #include "Ray.h"
 #include "Vec3.h"
 #include <memory>

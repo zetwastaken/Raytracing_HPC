@@ -1,6 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+/**
+ * @file Camera.h
+ * @brief Pinhole camera implementation for generating primary rays.
+ */
+
 #include "Vec3.h"
 
 /**

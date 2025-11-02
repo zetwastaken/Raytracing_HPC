@@ -1,5 +1,10 @@
 #include "Vec3.h"
 
+/**
+ * @file Color.h
+ * @brief Helpers for tone mapping and writing RGB values.
+ */
+
 #include <algorithm>
 #include <vector>
 

@@ -1,6 +1,11 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+/**
+ * @file Material.h
+ * @brief Surface interaction models for the ray tracer.
+ */
+
 #include "Ray.h"
 #include "Vec3.h"
 #include "Utils.h"

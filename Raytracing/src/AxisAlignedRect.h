@@ -1,6 +1,11 @@
 #ifndef AXIS_ALIGNED_RECT_H
 #define AXIS_ALIGNED_RECT_H
 
+/**
+ * @file AxisAlignedRect.h
+ * @brief Axis-aligned rectangle primitives for scene construction.
+ */
+
 #include "Hittable.h"
 #include "Material.h"
 #include "Ray.h"

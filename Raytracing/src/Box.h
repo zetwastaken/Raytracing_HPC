@@ -1,6 +1,11 @@
 #ifndef BOX_H
 #define BOX_H
 
+/**
+ * @file Box.h
+ * @brief Axis-aligned box primitive composed of rectangular faces.
+ */
+
 #include "AxisAlignedRect.h"
 #include "HittableList.h"
 

@@ -1,6 +1,11 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+/**
+ * @file Vec3.h
+ * @brief 3D vector math utilities used across the renderer.
+ */
+
 #include <cmath>
 #include <iostream>
 

@@ -3,6 +3,8 @@ project(Raytracer)
 
 set(CMAKE_CXX_STANDARD 17)
 
+option(RAYTRACER_ENABLE_NATIVE_OPTIMIZATIONS "Use -march=native (or equivalent) for Release builds" ON)
+
 add_executable(raytracer
     src/main.cpp
     src/AxisAlignedRect.cpp
@@ -14,14 +16,53 @@ add_executable(raytracer
     src/Vec3.cpp
 )
 
-target_compile_options(raytracer PRIVATE
-    $<$<CONFIG:Debug>:-g>
-    $<$<CONFIG:Debug>:-O2>
-    $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
-    $<$<CONFIG:Debug>:-fno-inline-functions>
-    $<$<CONFIG:Debug>:-fno-inline>
-)
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    # Favor profiler-friendly Debug builds and maximum throughput Release builds.
+    target_compile_options(raytracer PRIVATE
+        $<$<CONFIG:Debug>:-O0>
+        $<$<CONFIG:Debug>:-g>
+        $<$<CONFIG:Debug>:-ggdb3>
+        $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
+        $<$<CONFIG:Debug>:-fno-inline-functions>
+        $<$<CONFIG:Debug>:-fno-inline>
+        $<$<CONFIG:Debug>:-fno-optimize-sibling-calls>
+        $<$<CONFIG:Release>:-O3>
+        $<$<CONFIG:Release>:-ffast-math>
+        $<$<CONFIG:Release>:-funroll-loops>
+        $<$<CONFIG:Release>:-fomit-frame-pointer>
+        $<$<CONFIG:Release>:-fno-math-errno>
+        $<$<CONFIG:Release>:-fno-trapping-math>
+        $<$<AND:$<CONFIG:Release>,$<BOOL:${RAYTRACER_ENABLE_NATIVE_OPTIMIZATIONS}>>:-march=native>
+        $<$<AND:$<CONFIG:Release>,$<BOOL:${RAYTRACER_ENABLE_NATIVE_OPTIMIZATIONS}>>:-mtune=native>
+    )
+    if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.9")
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
+    endif()
+elseif(MSVC)
+    target_compile_options(raytracer PRIVATE
+        $<$<CONFIG:Debug>:/Od>
+        $<$<CONFIG:Debug>:/Zi>
+        $<$<CONFIG:Debug>:/Zo>
+        $<$<CONFIG:Debug>:/Oy->
+        $<$<CONFIG:Release>:/O2>
+        $<$<CONFIG:Release>:/Oi>
+        $<$<CONFIG:Release>:/GL>
+        $<$<CONFIG:Release>:/fp:fast>
+    )
+endif()
 
 set_source_files_properties(src/AxisAlignedRect.cpp PROPERTIES
     COMPILE_OPTIONS "$<$<CONFIG:Debug>:-fno-inline>"
 )
+
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM
+    )
+else()
+    message(STATUS "Doxygen not found. Documentation target 'doc' will be unavailable.")
+endif()

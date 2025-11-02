@@ -1,6 +1,11 @@
 #ifndef RENDER_CONFIG_H
 #define RENDER_CONFIG_H
 
+/**
+ * @file RenderConfig.h
+ * @brief Render resolution and quality controls.
+ */
+
 #include <string>
 
 /**

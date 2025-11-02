@@ -1,8 +1,8 @@
 # CMake build directories
 /build/
-/Raytracing_simple/build*/
+/Raytracing/build*/
 cmake-build-*/
-Raytracing_simple/cmake-build-*/
+/Raytracing/cmake-build-*/
 
 # CMake generated files
 CMakeCache.txt
@@ -25,9 +25,13 @@ CTestTestfile.cmake
 *.bak
 *.swp
 
-# Generated scene outputs
-Raytracing_simple/render.png
-Raytracing_simple/traces\ after\ removing\ inline.trace/
+# Project generated assets
+Raytracing/render*.png
+Raytracing/traces after removing inline.trace/
+
+# IDE metadata
+.idea/
+*.iml
 
 # Environment configuration
 .env
@@ -36,9 +40,8 @@ Raytracing_simple/traces\ after\ removing\ inline.trace/
 
 # OS and editor settings
 .DS_Store
+**/.DS_Store
 .vscode/
-.idea/
-*.iml
 
 # Language specific caches
 *.pyc

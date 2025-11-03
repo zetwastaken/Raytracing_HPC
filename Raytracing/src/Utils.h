@@ -37,6 +37,16 @@ Vec3 random_in_unit_sphere();
 Vec3 random_unit_vector();
 
 /**
+ * Generate a random vector on a unit hemisphere oriented around a normal.
+ * Uses cosine-weighted distribution for better importance sampling.
+ * This significantly reduces noise in diffuse materials.
+ * 
+ * @param normal The surface normal (should be unit length)
+ * @return Random direction on the hemisphere, cosine-weighted
+ */
+Vec3 random_cosine_direction(const Vec3& normal);
+
+/**
  * Check if a vector is very close to zero in all dimensions.
  * Used to catch degenerate cases.
  */

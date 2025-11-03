@@ -68,7 +68,7 @@ bool save_image(const std::string& filepath, const RenderConfig& config,
 
 int main() {
     // ========== Configuration ==========
-    RenderConfig config(16.0 / 9.0, 1024, 500);  // aspect_ratio, width, samples_per_pixel
+    RenderConfig config(16.0 / 9.0, 100, 500);  // aspect_ratio, width, samples_per_pixel
     const int max_depth = 100;  // Maximum number of ray bounces for reflections/refractions
     const RoomLayout room_layout = default_room_layout();
     const double ceiling_height = room_layout.ceiling_y;

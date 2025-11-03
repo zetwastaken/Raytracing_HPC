@@ -27,6 +27,11 @@ Generate HTML API docs with Doxygen:
 - `cmake --build build/build-release --target doc` *(once configured, see `Doxyfile`)*
 - Output appears under `docs/html/index.html`
 
+## Profiling & Symbols
+- Release binaries embed line tables, so Instruments and other profilers can recover source locations.
+- On macOS the build invokes `dsymutil` (controlled by `RAYTRACER_GENERATE_DSYM`, default `ON`); keep the resulting `.dSYM` folder next to the binary when profiling.
+- Disable the automatic dSYM step via `-DRAYTRACER_GENERATE_DSYM=OFF` if you prefer to manage symbol bundles manually.
+
 ## Repository Layout
 - `src/` – core engine (camera, materials, renderer, scene)
 - `render.png` – latest rendered image

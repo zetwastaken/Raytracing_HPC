@@ -29,6 +29,24 @@ Vec3 random_unit_vector() {
     return unit_vector(random_in_unit_sphere());
 }
 
+Vec3 random_cosine_direction(const Vec3& normal) {
+    // Generate random point on unit disk using polar coordinates
+    const double r = std::sqrt(random_double());
+    const double theta = 2 * M_PI * random_double();
+    const double x = r * std::cos(theta);
+    const double y = r * std::sin(theta);
+    const double z = std::sqrt(1 - r * r);  // Height on hemisphere
+    
+    // Build orthonormal basis around the normal
+    // Find a vector not parallel to normal
+    Vec3 a = (std::fabs(normal.x()) > 0.9) ? Vec3(0, 1, 0) : Vec3(1, 0, 0);
+    Vec3 tangent = unit_vector(cross(normal, a));
+    Vec3 bitangent = cross(normal, tangent);
+    
+    // Transform random point to world space
+    return unit_vector(tangent * x + bitangent * y + normal * z);
+}
+
 bool is_near_zero(const Vec3& vector) {
     constexpr double epsilon = 1e-8;
     return (std::fabs(vector.x()) < epsilon) &&

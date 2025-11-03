@@ -53,6 +53,7 @@ public:
 /**
  * A matte (diffuse) material that scatters light in random directions.
  * This creates a rough, non-shiny surface like chalk or unpolished stone.
+ * Uses cosine-weighted hemisphere sampling for reduced noise.
  */
 class Matte : public Material {
 public:
@@ -64,8 +65,9 @@ public:
                 ScatterRecord& scatter_record) const override {
         (void)ray_in;  // Not used for matte materials
         
-        // Scatter in a random direction from the surface
-        Vec3 scatter_direction = hit_info.surface_normal + random_unit_vector();
+        // Use cosine-weighted hemisphere sampling for better quality
+        // This significantly reduces noise compared to random_unit_vector()
+        Vec3 scatter_direction = random_cosine_direction(hit_info.surface_normal);
         
         // Catch degenerate scatter direction
         if (is_near_zero(scatter_direction)) {

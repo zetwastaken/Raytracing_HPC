@@ -54,9 +54,11 @@ struct Scene {
  *
  * @param layout Room dimensions and wall placement.
  * @param lights Explicit light list; defaults to a ceiling emitter.
+ * @param enable_acceleration Build BVH acceleration when true (default).
  * @return Scene ready for rendering.
  */
 Scene create_scene(const RoomLayout& layout = default_room_layout(),
-                   std::vector<Light> lights = {});
+                   std::vector<Light> lights = {},
+                   bool enable_acceleration = true);
 
 #endif

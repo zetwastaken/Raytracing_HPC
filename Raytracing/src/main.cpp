@@ -69,6 +69,12 @@ bool save_image(const std::string& filepath, const RenderConfig& config,
 int main() {
     // ========== Configuration ==========
     RenderConfig config(16.0 / 9.0, 100, 500);  // aspect_ratio, width, samples_per_pixel
+    // Toggle these for study:
+    // 1) Original: enable_bvh = false, enable_multithreading = false
+    // 2) BVH only: enable_bvh = true, enable_multithreading = false
+    // 3) BVH + multithreading: enable_bvh = true, enable_multithreading = true
+    config.enable_bvh = true;
+    config.enable_multithreading = true;
     const int max_depth = 100;  // Maximum number of ray bounces for reflections/refractions
     const RoomLayout room_layout = default_room_layout();
     const double ceiling_height = room_layout.ceiling_y;
@@ -87,7 +93,7 @@ int main() {
         Color(lamp_intensity, lamp_intensity, lamp_intensity)
     );
 
-    Scene scene = create_scene(room_layout, std::move(lights));
+    Scene scene = create_scene(room_layout, std::move(lights), config.enable_bvh);
     
     // ========== Render ==========
     std::vector<unsigned char> image_data = render_image(config, camera, scene, max_depth);

@@ -14,3 +14,8 @@ void write_color(std::vector<unsigned char>& image_buffer, Color pixel_color) {
     image_buffer.push_back(convert_to_byte(pixel_color.z()));
 }
 
+void write_color_at(std::vector<unsigned char>& image_buffer, std::size_t offset, Color pixel_color) {
+    image_buffer[offset] = convert_to_byte(pixel_color.x());
+    image_buffer[offset + 1] = convert_to_byte(pixel_color.y());
+    image_buffer[offset + 2] = convert_to_byte(pixel_color.z());
+}

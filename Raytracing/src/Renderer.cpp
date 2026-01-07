@@ -1,6 +1,10 @@
 #include "Renderer.h"
 
+#include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <iostream>
+#include <thread>
 
 Color calculate_sky_color(const Ray& ray) {
     const Vec3 unit_direction = unit_vector(ray.direction());
@@ -100,27 +104,81 @@ std::vector<unsigned char> render_image(const RenderConfig& config,
                                         const Camera& camera,
                                         const Scene& scene,
                                         int max_depth) {
-    std::vector<unsigned char> image_data;
     const std::size_t total_pixels =
         static_cast<std::size_t>(config.image_width) * static_cast<std::size_t>(config.image_height);
-    image_data.reserve(total_pixels * 3);
+    std::vector<unsigned char> image_data(total_pixels * 3);
 
     std::cerr << "Rendering scene with " << scene.object_count() << " objects and "
               << scene.light_count() << " lights...\n";
     std::cerr << "Image size: " << config.image_width << "x" << config.image_height << "\n";
     std::cerr << "Using " << config.samples_per_pixel << " samples per pixel for antialiasing\n";
     std::cerr << "Maximum ray bounce depth: " << max_depth << "\n";
+    std::cerr << "BVH acceleration: " << (config.enable_bvh ? "on" : "off") << "\n";
+    std::cerr << "Multithreading: " << (config.enable_multithreading ? "on" : "off") << "\n";
 
-    for (int row = config.image_height - 1; row >= 0; --row) {
-        std::cerr << "\rScanlines remaining: " << row << ' ' << std::flush;
+    const unsigned int hardware_threads = std::max(1u, std::thread::hardware_concurrency());
+    const int rows = config.image_height;
+    const bool allow_threads = config.enable_multithreading && hardware_threads > 1;
 
-        for (int col = 0; col < config.image_width; ++col) {
-            const Color pixel_color = render_pixel(col, row, config, camera, scene, max_depth);
-            write_color(image_data, pixel_color);
+    if (!allow_threads) {
+        for (int row = config.image_height - 1; row >= 0; --row) {
+            std::cerr << "\rScanlines remaining: " << row << ' ' << std::flush;
+
+            for (int col = 0; col < config.image_width; ++col) {
+                const Color pixel_color = render_pixel(col, row, config, camera, scene, max_depth);
+                const std::size_t dest_row = static_cast<std::size_t>(config.image_height - 1 - row);
+                const std::size_t offset =
+                    (dest_row * static_cast<std::size_t>(config.image_width) + static_cast<std::size_t>(col)) * 3;
+                write_color_at(image_data, offset, pixel_color);
+            }
         }
+        std::cerr << "\n";
+        return image_data;
     }
 
-    std::cerr << "\n";
+    const int thread_count = static_cast<int>(hardware_threads);
+    const int rows_per_thread = (rows + thread_count - 1) / thread_count;
+    std::atomic<int> rows_completed{0};
+    std::vector<std::thread> workers;
+    workers.reserve(thread_count);
+
+    for (int thread_index = 0; thread_index < thread_count; ++thread_index) {
+        const int start_row = thread_index * rows_per_thread;
+        const int end_row = std::min(rows, start_row + rows_per_thread);
+
+        if (start_row >= end_row) {
+            continue;
+        }
+
+        workers.emplace_back([&, start_row, end_row]() {
+            for (int row = start_row; row < end_row; ++row) {
+                for (int col = 0; col < config.image_width; ++col) {
+                    const Color pixel_color = render_pixel(col, row, config, camera, scene, max_depth);
+                    const std::size_t dest_row = static_cast<std::size_t>(config.image_height - 1 - row);
+                    const std::size_t offset =
+                        (dest_row * static_cast<std::size_t>(config.image_width) + static_cast<std::size_t>(col)) * 3;
+                    write_color_at(image_data, offset, pixel_color);
+                }
+                rows_completed.fetch_add(1, std::memory_order_relaxed);
+            }
+        });
+    }
+
+    // Simple progress loop on the main thread.
+    int last_reported = 0;
+    while (rows_completed.load(std::memory_order_relaxed) < rows) {
+        const int done = rows_completed.load(std::memory_order_relaxed);
+        if (done != last_reported) {
+            std::cerr << "\rRows completed: " << done << "/" << rows << std::flush;
+            last_reported = done;
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+
+    for (auto& worker : workers) {
+        worker.join();
+    }
+
+    std::cerr << "\rRows completed: " << rows << "/" << rows << "\n";
     return image_data;
 }
-

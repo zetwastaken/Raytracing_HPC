@@ -11,10 +11,10 @@ RoomLayout default_room_layout() {
     };
 }
 
-Scene create_scene(const RoomLayout& layout, std::vector<Light> lights) {
+Scene create_scene(const RoomLayout& layout, std::vector<Light> lights, bool enable_acceleration) {
     Scene scene;
     scene.layout = layout;
-    scene.objects.set_acceleration_enabled(false);
+    scene.objects.set_acceleration_enabled(enable_acceleration);
 
     const double half_room_width = layout.half_width;
     const double half_room_depth = layout.half_depth;
@@ -157,7 +157,9 @@ Scene create_scene(const RoomLayout& layout, std::vector<Light> lights) {
     }
 
     scene.lights = std::move(lights);
-    scene.objects.build_bvh();
+    if (enable_acceleration) {
+        scene.objects.build_bvh();
+    }
 
     return scene;
 }

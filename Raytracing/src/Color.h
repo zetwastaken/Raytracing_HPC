@@ -37,3 +37,13 @@ unsigned char convert_to_byte(double color_value);
  * @param pixel_color The color to add (x=red, y=green, z=blue)
  */
 void write_color(std::vector<unsigned char>& image_buffer, Color pixel_color);
+
+/**
+ * Write a pixel color into a preallocated image buffer at a byte offset.
+ * The caller is responsible for ensuring offset, offset+1, offset+2 are valid.
+ *
+ * @param image_buffer Destination image buffer (pre-sized to width * height * 3).
+ * @param offset Byte offset where RGB should be stored.
+ * @param pixel_color Color to write.
+ */
+void write_color_at(std::vector<unsigned char>& image_buffer, std::size_t offset, Color pixel_color);

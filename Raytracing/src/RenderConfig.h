@@ -17,6 +17,8 @@ struct RenderConfig {
     int image_height;
     int samples_per_pixel;
     std::string output_path;
+    bool enable_bvh;
+    bool enable_multithreading;
     
     /**
      * Create a render configuration.
@@ -32,6 +34,8 @@ struct RenderConfig {
         , image_height(static_cast<int>(width / ratio))
         , samples_per_pixel(samples)
         , output_path("render.png")
+        , enable_bvh(false)
+        , enable_multithreading(false)
     {}
 };
 

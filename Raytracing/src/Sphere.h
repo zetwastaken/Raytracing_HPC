@@ -80,6 +80,12 @@ public:
         
         return true;
     }
+
+    bool bounding_box(Aabb& output_box) const override {
+        const Vec3 radius_vector(radius, radius, radius);
+        output_box = Aabb(center_position - radius_vector, center_position + radius_vector);
+        return true;
+    }
 };
 
 #endif

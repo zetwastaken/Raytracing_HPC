@@ -64,3 +64,26 @@ bool AxisAlignedRect::hit(const Ray& ray, double min_distance, double max_distan
     record.set_face_normal(ray, outward_normal);
     return true;
 }
+
+bool AxisAlignedRect::bounding_box(Aabb& output_box) const {
+    constexpr double padding = 0.0001;
+
+    double min_components[3] = {};
+    double max_components[3] = {};
+
+    min_components[static_cast<int>(orientation.tangent_u)] = u0;
+    max_components[static_cast<int>(orientation.tangent_u)] = u1;
+
+    min_components[static_cast<int>(orientation.tangent_v)] = v0;
+    max_components[static_cast<int>(orientation.tangent_v)] = v1;
+
+    min_components[static_cast<int>(orientation.normal_axis)] = k - padding;
+    max_components[static_cast<int>(orientation.normal_axis)] = k + padding;
+
+    output_box = Aabb(
+        Point3(min_components[0], min_components[1], min_components[2]),
+        Point3(max_components[0], max_components[1], max_components[2])
+    );
+
+    return true;
+}

@@ -14,6 +14,7 @@ RoomLayout default_room_layout() {
 Scene create_scene(const RoomLayout& layout, std::vector<Light> lights) {
     Scene scene;
     scene.layout = layout;
+    scene.objects.set_acceleration_enabled(false);
 
     const double half_room_width = layout.half_width;
     const double half_room_depth = layout.half_depth;
@@ -156,7 +157,7 @@ Scene create_scene(const RoomLayout& layout, std::vector<Light> lights) {
     }
 
     scene.lights = std::move(lights);
+    scene.objects.build_bvh();
 
     return scene;
 }
-

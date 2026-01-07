@@ -60,10 +60,17 @@ public:
             minimum_corner.z(), maximum_corner.z(),
             minimum_corner.x(), shared_material
         ));
+
+        sides.build_bvh();
     }
 
     bool hit(const Ray& ray, double min_distance, double max_distance, HitRecord& record) const override {
         return sides.hit(ray, min_distance, max_distance, record);
+    }
+
+    bool bounding_box(Aabb& output_box) const override {
+        output_box = Aabb(minimum_corner, maximum_corner);
+        return true;
     }
 };
 

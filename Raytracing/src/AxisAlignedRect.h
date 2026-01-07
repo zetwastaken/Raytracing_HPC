@@ -45,6 +45,7 @@ public:
                     bool flip = false);
 
     bool hit(const Ray& ray, double min_distance, double max_distance, HitRecord& record) const override;
+    bool bounding_box(Aabb& output_box) const override;
 
 protected:
     const RectOrientation orientation;

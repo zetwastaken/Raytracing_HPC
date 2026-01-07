@@ -9,6 +9,7 @@
 #include "Ray.h"
 #include "Vec3.h"
 #include <memory>
+#include "Aabb.h"
 
 // Forward declaration
 class Material;
@@ -60,6 +61,12 @@ public:
      * @return true if the ray hit this object, false otherwise
      */
     virtual bool hit(const Ray& ray, double min_distance, double max_distance, HitRecord& record) const = 0;
+
+    /**
+     * Return the axis-aligned bounding box for this object.
+     * Used by acceleration structures to cull ray intersection tests.
+     */
+    virtual bool bounding_box(Aabb& output_box) const = 0;
 };
 
 #endif

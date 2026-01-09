@@ -5,8 +5,10 @@
 #include "Scene.h"
 
 #include <chrono>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -66,16 +68,163 @@ bool save_image(const std::string& filepath, const RenderConfig& config,
     return success;
 }
 
-int main() {
+namespace {
+bool parse_int(const std::string& value, int& out) {
+    char* end = nullptr;
+    long parsed = std::strtol(value.c_str(), &end, 10);
+    if (end != value.c_str() + value.size()) {
+        return false;
+    }
+    if (parsed < std::numeric_limits<int>::min() || parsed > std::numeric_limits<int>::max()) {
+        return false;
+    }
+    out = static_cast<int>(parsed);
+    return true;
+}
+
+bool parse_double(const std::string& value, double& out) {
+    char* end = nullptr;
+    double parsed = std::strtod(value.c_str(), &end);
+    if (end != value.c_str() + value.size()) {
+        return false;
+    }
+    out = parsed;
+    return true;
+}
+
+void print_usage(const char* exe) {
+    std::cerr << "Usage: " << exe << " [options]\n"
+              << "Options:\n"
+              << "  --mode original|bvh|bvh-mt   Select acceleration/threading preset (default: bvh-mt)\n"
+              << "  --width N                    Image width (pixels)\n"
+              << "  --height N                   Image height (pixels). Overrides aspect ratio.\n"
+              << "  --aspect RATIO               Aspect ratio (width/height). Used when height not provided.\n"
+              << "  --samples N                  Samples per pixel\n"
+              << "  --depth N                    Max ray bounce depth\n"
+              << "  --output PATH                Output PNG path (default: auto timestamp name)\n"
+              << "  --bvh / --no-bvh             Force enable/disable BVH\n"
+              << "  --threads / --no-threads     Force enable/disable multithreading\n"
+              << "  --help                       Show this message\n";
+}
+
+struct CliSettings {
+    RenderConfig config;
+    int max_depth = 100;
+    bool height_override = false;
+    int height_value = 0;
+    bool output_override = false;
+};
+
+bool parse_arguments(int argc, char* argv[], CliSettings& settings) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+
+        auto require_value = [&](const std::string& name) -> const char* {
+            if (i + 1 >= argc) {
+                std::cerr << "Missing value for " << name << "\n";
+                return nullptr;
+            }
+            return argv[++i];
+        };
+
+        if (arg == "--help" || arg == "-h") {
+            print_usage(argv[0]);
+            return false;
+        } else if (arg == "--mode") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            std::string mode = value;
+            if (mode == "original") {
+                settings.config.enable_bvh = false;
+                settings.config.enable_multithreading = false;
+            } else if (mode == "bvh") {
+                settings.config.enable_bvh = true;
+                settings.config.enable_multithreading = false;
+            } else if (mode == "bvh-mt") {
+                settings.config.enable_bvh = true;
+                settings.config.enable_multithreading = true;
+            } else {
+                std::cerr << "Unknown mode: " << mode << "\n";
+                return false;
+            }
+        } else if (arg == "--width") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            if (!parse_int(value, settings.config.image_width)) {
+                std::cerr << "Invalid width: " << value << "\n";
+                return false;
+            }
+        } else if (arg == "--height") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            if (!parse_int(value, settings.height_value)) {
+                std::cerr << "Invalid height: " << value << "\n";
+                return false;
+            }
+            settings.height_override = true;
+        } else if (arg == "--aspect") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            if (!parse_double(value, settings.config.aspect_ratio)) {
+                std::cerr << "Invalid aspect ratio: " << value << "\n";
+                return false;
+            }
+        } else if (arg == "--samples") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            if (!parse_int(value, settings.config.samples_per_pixel)) {
+                std::cerr << "Invalid samples: " << value << "\n";
+                return false;
+            }
+        } else if (arg == "--depth") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            if (!parse_int(value, settings.max_depth)) {
+                std::cerr << "Invalid depth: " << value << "\n";
+                return false;
+            }
+        } else if (arg == "--output") {
+            const char* value = require_value(arg);
+            if (!value) return false;
+            settings.config.output_path = value;
+            settings.output_override = true;
+        } else if (arg == "--bvh") {
+            settings.config.enable_bvh = true;
+        } else if (arg == "--no-bvh") {
+            settings.config.enable_bvh = false;
+        } else if (arg == "--threads") {
+            settings.config.enable_multithreading = true;
+        } else if (arg == "--no-threads") {
+            settings.config.enable_multithreading = false;
+        } else {
+            std::cerr << "Unknown option: " << arg << "\n";
+            return false;
+        }
+    }
+    return true;
+}
+} // namespace
+
+int main(int argc, char* argv[]) {
     // ========== Configuration ==========
-    RenderConfig config(16.0 / 9.0, 100, 500);  // aspect_ratio, width, samples_per_pixel
-    // Toggle these for study:
-    // 1) Original: enable_bvh = false, enable_multithreading = false
-    // 2) BVH only: enable_bvh = true, enable_multithreading = false
-    // 3) BVH + multithreading: enable_bvh = true, enable_multithreading = true
-    config.enable_bvh = true;
-    config.enable_multithreading = true;
-    const int max_depth = 100;  // Maximum number of ray bounces for reflections/refractions
+    CliSettings settings;
+    // Defaults mirror previous behavior (BVH + multithreading on).
+    settings.config.enable_bvh = true;
+    settings.config.enable_multithreading = true;
+    settings.max_depth = 100;
+
+    if (!parse_arguments(argc, argv, settings)) {
+        return 1;
+    }
+
+    RenderConfig& config = settings.config;
+    if (settings.height_override) {
+        config.image_height = settings.height_value;
+        config.aspect_ratio = static_cast<double>(config.image_width) / static_cast<double>(config.image_height);
+    } else {
+        config.image_height = static_cast<int>(config.image_width / config.aspect_ratio);
+    }
+    const int max_depth = settings.max_depth;
     const RoomLayout room_layout = default_room_layout();
     const double ceiling_height = room_layout.ceiling_y;
     const double room_center_z = room_layout.back_wall_z + room_layout.half_depth;
@@ -100,6 +249,9 @@ int main() {
     
     // ========== Save ==========
     std::string output_filename = generate_filename(config, max_depth);
+    if (settings.output_override) {
+        output_filename = config.output_path;
+    }
     bool success = save_image(output_filename, config, image_data);
     
     return success ? 0 : 1;

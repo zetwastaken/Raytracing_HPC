@@ -3,6 +3,7 @@
 #include "RenderConfig.h"
 #include "Renderer.h"
 #include "Scene.h"
+#include "GpuRenderer.h"
 
 #include <chrono>
 #include <cstdlib>
@@ -95,7 +96,7 @@ bool parse_double(const std::string& value, double& out) {
 void print_usage(const char* exe) {
     std::cerr << "Usage: " << exe << " [options]\n"
               << "Options:\n"
-              << "  --mode original|bvh|bvh-mt   Select acceleration/threading preset (default: bvh-mt)\n"
+              << "  --mode original|bvh|bvh-mt|gpu   Select rendering preset (default: bvh-mt)\n"
               << "  --width N                    Image width (pixels)\n"
               << "  --height N                   Image height (pixels). Overrides aspect ratio.\n"
               << "  --aspect RATIO               Aspect ratio (width/height). Used when height not provided.\n"
@@ -104,6 +105,7 @@ void print_usage(const char* exe) {
               << "  --output PATH                Output PNG path (default: auto timestamp name)\n"
               << "  --bvh / --no-bvh             Force enable/disable BVH\n"
               << "  --threads / --no-threads     Force enable/disable multithreading\n"
+              << "  --gpu / --no-gpu             Force enable/disable GPU rendering (Metal)\n"
               << "  --help                       Show this message\n";
 }
 
@@ -137,12 +139,19 @@ bool parse_arguments(int argc, char* argv[], CliSettings& settings) {
             if (mode == "original") {
                 settings.config.enable_bvh = false;
                 settings.config.enable_multithreading = false;
+                settings.config.enable_gpu = false;
             } else if (mode == "bvh") {
                 settings.config.enable_bvh = true;
                 settings.config.enable_multithreading = false;
+                settings.config.enable_gpu = false;
             } else if (mode == "bvh-mt") {
                 settings.config.enable_bvh = true;
                 settings.config.enable_multithreading = true;
+                settings.config.enable_gpu = false;
+            } else if (mode == "gpu") {
+                settings.config.enable_bvh = false;
+                settings.config.enable_multithreading = false;
+                settings.config.enable_gpu = true;
             } else {
                 std::cerr << "Unknown mode: " << mode << "\n";
                 return false;
@@ -196,6 +205,12 @@ bool parse_arguments(int argc, char* argv[], CliSettings& settings) {
             settings.config.enable_multithreading = true;
         } else if (arg == "--no-threads") {
             settings.config.enable_multithreading = false;
+        } else if (arg == "--gpu") {
+            settings.config.enable_gpu = true;
+            settings.config.enable_bvh = false;
+            settings.config.enable_multithreading = false;
+        } else if (arg == "--no-gpu") {
+            settings.config.enable_gpu = false;
         } else {
             std::cerr << "Unknown option: " << arg << "\n";
             return false;
@@ -242,10 +257,15 @@ int main(int argc, char* argv[]) {
         Color(lamp_intensity, lamp_intensity, lamp_intensity)
     );
 
-    Scene scene = create_scene(room_layout, std::move(lights), config.enable_bvh);
+    Scene scene = create_scene(room_layout, std::move(lights), config.enable_bvh && !settings.config.enable_gpu);
     
     // ========== Render ==========
-    std::vector<unsigned char> image_data = render_image(config, camera, scene, max_depth);
+    std::vector<unsigned char> image_data;
+    if (config.enable_gpu) {
+        image_data = render_image_gpu(config, camera, scene, max_depth);
+    } else {
+        image_data = render_image(config, camera, scene, max_depth);
+    }
     
     // ========== Save ==========
     std::string output_filename = generate_filename(config, max_depth);

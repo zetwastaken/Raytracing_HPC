@@ -19,6 +19,7 @@ struct RenderConfig {
     std::string output_path;
     bool enable_bvh;
     bool enable_multithreading;
+    bool enable_gpu;
     
     /**
      * Create a render configuration.
@@ -36,6 +37,7 @@ struct RenderConfig {
         , output_path("render.png")
         , enable_bvh(false)
         , enable_multithreading(false)
+        , enable_gpu(false)
     {}
 };
 

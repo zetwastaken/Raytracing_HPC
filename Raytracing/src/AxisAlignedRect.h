@@ -47,6 +47,14 @@ public:
     bool hit(const Ray& ray, double min_distance, double max_distance, HitRecord& record) const override;
     bool bounding_box(Aabb& output_box) const override;
 
+    double u_min() const { return u0; }
+    double u_max() const { return u1; }
+    double v_min() const { return v0; }
+    double v_max() const { return v1; }
+    double k_value() const { return k; }
+    bool is_flipped() const { return flip_normal; }
+    std::shared_ptr<Material> material() const { return material_ptr; }
+
 protected:
     const RectOrientation orientation;
     const double u0;

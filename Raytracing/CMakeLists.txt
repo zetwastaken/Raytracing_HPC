@@ -10,6 +10,7 @@ add_executable(raytracer
     src/main.cpp
     src/AxisAlignedRect.cpp
     src/Color.cpp
+    src/GpuRenderer.mm
     src/PngWriter.cpp
     src/Renderer.cpp
     src/Scene.cpp
@@ -50,6 +51,20 @@ elseif(MSVC)
         $<$<CONFIG:Release>:/Oi>
         $<$<CONFIG:Release>:/GL>
         $<$<CONFIG:Release>:/fp:fast>
+    )
+endif()
+
+# Enable Objective-C++ for Metal host code.
+set_source_files_properties(src/GpuRenderer.mm PROPERTIES
+    COMPILE_FLAGS "-fobjc-arc"
+)
+
+find_library(METAL_FRAMEWORK Metal)
+find_library(FOUNDATION_FRAMEWORK Foundation)
+if(METAL_FRAMEWORK AND FOUNDATION_FRAMEWORK)
+    target_link_libraries(raytracer PRIVATE
+        ${METAL_FRAMEWORK}
+        ${FOUNDATION_FRAMEWORK}
     )
 endif()
 

@@ -1,7 +1,57 @@
 #include "Renderer.h"
 
 #include <algorithm>
+#include <chrono>
 #include <thread>
+#include <atomic>
+#include <cstdint>
+
+#if defined(__linux__)
+#include <pthread.h>
+#include <sched.h>
+#elif defined(__APPLE__)
+#include <pthread.h>
+#include <mach/mach.h>
+#include <mach/thread_policy.h>
+#endif
+
+namespace {
+
+thread_local std::atomic<uint64_t>* tls_ray_counter = nullptr;
+
+class RayCounterGuard {
+public:
+    explicit RayCounterGuard(std::atomic<uint64_t>* counter)
+        : previous(tls_ray_counter) {
+        tls_ray_counter = counter;
+    }
+    ~RayCounterGuard() {
+        tls_ray_counter = previous;
+    }
+private:
+    std::atomic<uint64_t>* previous;
+};
+
+void pin_current_thread(int cpu_index, unsigned int hw_threads) {
+    if (cpu_index < 0 || hw_threads == 0) {
+        return;
+    }
+#if defined(__linux__)
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    CPU_SET(static_cast<unsigned long>(cpu_index % static_cast<int>(hw_threads)), &cpuset);
+    pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+#elif defined(__APPLE__)
+    thread_affinity_policy_data_t policy = { cpu_index % static_cast<int>(hw_threads) };
+    thread_port_t thread = pthread_mach_thread_np(pthread_self());
+    thread_policy_set(thread, THREAD_AFFINITY_POLICY, (thread_policy_t)&policy, 1);
+#else
+    (void)cpu_index;
+    (void)hw_threads;
+#endif
+}
+
+} // namespace
 
 Color calculate_sky_color(const Ray& ray) {
     const Vec3 unit_direction = unit_vector(ray.direction());
@@ -47,6 +97,10 @@ Color compute_diffuse_lighting(const Scene& scene, const HitRecord& hit_info) {
 }
 
 Color calculate_ray_color(const Ray& ray, const Scene& scene, int depth) {
+    if (tls_ray_counter) {
+        tls_ray_counter->fetch_add(1, std::memory_order_relaxed);
+    }
+
     if (depth <= 0) {
         return Color(0, 0, 0);
     }
@@ -100,16 +154,35 @@ Color render_pixel(int col, int row, const RenderConfig& config,
 std::vector<unsigned char> render_image(const RenderConfig& config,
                                         const Camera& camera,
                                         const Scene& scene,
-                                        int max_depth) {
+                                        int max_depth,
+                                        double* thread_launch_ms,
+                                        uint64_t* ray_count_out) {
+    if (thread_launch_ms) {
+        *thread_launch_ms = 0.0;
+    }
+    if (ray_count_out) {
+        *ray_count_out = 0;
+    }
+
+    std::atomic<uint64_t> ray_counter{0};
+
     const std::size_t total_pixels =
         static_cast<std::size_t>(config.image_width) * static_cast<std::size_t>(config.image_height);
     std::vector<unsigned char> image_data(total_pixels * 3);
 
     const unsigned int hardware_threads = std::max(1u, std::thread::hardware_concurrency());
+    const int requested_threads = config.thread_count_override > 0
+        ? config.thread_count_override
+        : static_cast<int>(hardware_threads);
+    const int thread_count = std::max(1, requested_threads);
     const int rows = config.image_height;
-    const bool allow_threads = config.enable_multithreading && hardware_threads > 1;
+    const bool allow_threads = config.enable_multithreading && thread_count > 1;
 
     if (!allow_threads) {
+        RayCounterGuard guard(&ray_counter);
+        if (config.pin_threads) {
+            pin_current_thread(0, hardware_threads);
+        }
         for (int row = config.image_height - 1; row >= 0; --row) {
             for (int col = 0; col < config.image_width; ++col) {
                 const Color pixel_color = render_pixel(col, row, config, camera, scene, max_depth);
@@ -119,14 +192,17 @@ std::vector<unsigned char> render_image(const RenderConfig& config,
                 write_color_at(image_data, offset, pixel_color);
             }
         }
+        if (ray_count_out) {
+            *ray_count_out = ray_counter.load(std::memory_order_relaxed);
+        }
         return image_data;
     }
 
-    const int thread_count = static_cast<int>(hardware_threads);
     const int rows_per_thread = (rows + thread_count - 1) / thread_count;
     std::vector<std::thread> workers;
     workers.reserve(thread_count);
 
+    const auto launch_start = std::chrono::steady_clock::now();
     for (int thread_index = 0; thread_index < thread_count; ++thread_index) {
         const int start_row = thread_index * rows_per_thread;
         const int end_row = std::min(rows, start_row + rows_per_thread);
@@ -135,7 +211,11 @@ std::vector<unsigned char> render_image(const RenderConfig& config,
             continue;
         }
 
-        workers.emplace_back([&, start_row, end_row]() {
+        workers.emplace_back([&, start_row, end_row, thread_index]() {
+            if (config.pin_threads) {
+                pin_current_thread(thread_index, hardware_threads);
+            }
+            RayCounterGuard guard(&ray_counter);
             for (int row = start_row; row < end_row; ++row) {
                 for (int col = 0; col < config.image_width; ++col) {
                     const Color pixel_color = render_pixel(col, row, config, camera, scene, max_depth);
@@ -147,9 +227,17 @@ std::vector<unsigned char> render_image(const RenderConfig& config,
             }
         });
     }
+    const auto launch_end = std::chrono::steady_clock::now();
+    if (thread_launch_ms) {
+        *thread_launch_ms = std::chrono::duration<double, std::milli>(launch_end - launch_start).count();
+    }
 
     for (auto& worker : workers) {
         worker.join();
+    }
+
+    if (ray_count_out) {
+        *ray_count_out = ray_counter.load(std::memory_order_relaxed);
     }
 
     return image_data;

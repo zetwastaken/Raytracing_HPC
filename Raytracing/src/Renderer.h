@@ -19,6 +19,7 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <cstdint>
 
 /**
  * @brief Calculate the sky gradient color for primary rays that miss geometry.
@@ -71,11 +72,14 @@ Color render_pixel(int col, int row, const RenderConfig& config,
  * @param camera Camera used to spawn primary rays.
  * @param scene Scene containing geometry and lights.
  * @param max_depth Maximum recursion depth for secondary rays.
+ * @param thread_launch_ms Optional output parameter storing the time spent launching threads (ms).
  * @return Packed RGB buffer ready for PNG writing.
  */
 std::vector<unsigned char> render_image(const RenderConfig& config,
                                         const Camera& camera,
                                         const Scene& scene,
-                                        int max_depth);
+                                        int max_depth,
+                                        double* thread_launch_ms = nullptr,
+                                        uint64_t* ray_count_out = nullptr);
 
 #endif

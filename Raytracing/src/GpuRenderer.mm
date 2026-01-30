@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <chrono>
 
 namespace {
 
@@ -576,7 +577,8 @@ id<MTLLibrary> compileLibrary(id<MTLDevice> device, NSError** error) {
 std::vector<unsigned char> render_image_gpu(const RenderConfig& config,
                                             const Camera& camera,
                                             const Scene& scene,
-                                            int max_depth) {
+                                            int max_depth,
+                                            double* gpu_ms) {
     @autoreleasepool {
         id<MTLDevice> device = MTLCreateSystemDefaultDevice();
         if (!device) {
@@ -691,8 +693,24 @@ std::vector<unsigned char> render_image_gpu(const RenderConfig& config,
         [encoder dispatchThreads:threadsPerGrid threadsPerThreadgroup:threadsPerGroup];
         [encoder endEncoding];
 
+        const auto t_gpu_start = std::chrono::steady_clock::now();
         [command commit];
         [command waitUntilCompleted];
+        const auto t_gpu_end = std::chrono::steady_clock::now();
+
+        if (gpu_ms) {
+            const double wall_ms = std::chrono::duration<double, std::milli>(t_gpu_end - t_gpu_start).count();
+            double metal_ms = 0.0;
+            if ([command respondsToSelector:@selector(GPUStartTime)] &&
+                [command respondsToSelector:@selector(GPUEndTime)]) {
+                const double start = [command GPUStartTime];
+                const double end = [command GPUEndTime];
+                if (end > start) {
+                    metal_ms = (end - start) * 1000.0;
+                }
+            }
+            *gpu_ms = metal_ms > 0.0 ? metal_ms : wall_ms;
+        }
 
         return output;
     }

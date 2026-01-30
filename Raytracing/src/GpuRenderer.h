@@ -13,6 +13,7 @@
 std::vector<unsigned char> render_image_gpu(const RenderConfig& config,
                                             const Camera& camera,
                                             const Scene& scene,
-                                            int max_depth);
+                                            int max_depth,
+                                            double* gpu_ms = nullptr);
 
 #endif

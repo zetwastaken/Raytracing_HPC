@@ -20,6 +20,8 @@ struct RenderConfig {
     bool enable_bvh;
     bool enable_multithreading;
     bool enable_gpu;
+    int thread_count_override;
+    bool pin_threads;
     
     /**
      * Create a render configuration.
@@ -38,6 +40,8 @@ struct RenderConfig {
         , enable_bvh(false)
         , enable_multithreading(false)
         , enable_gpu(false)
+        , thread_count_override(0)
+        , pin_threads(false)
     {}
 };
 
